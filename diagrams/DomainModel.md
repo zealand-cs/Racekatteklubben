@@ -9,6 +9,7 @@ classDiagram
         name
         email
         password
+        role
     }
     
     class Cat { 
@@ -19,5 +20,11 @@ classDiagram
         image
     }
     
+    class Show {
+        startDate
+        endDate
+    }
     
+    User "1" -- "0..n" Cat
+    Cat "0..n" -- "0..n" Show
 ```
