@@ -1,6 +1,6 @@
 # Systemsequencediagrams
 
-## Create user (#1)
+## Create user ([#1](https://github.com/zealand-cs/Racekatteklubben/issues/1))
 
 ```mermaid
 sequenceDiagram
