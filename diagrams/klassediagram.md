@@ -53,11 +53,42 @@ direction LR
         +Integer getPoints()
         +void setPoints(Integer points)
         
+        }
         
+    class UserService {
+        - UserRepository userRepository
+        + User registerUser(User user)
+        + Optional<User> getUserByEmail(String email) 
     }
     
+    class UserRepository {
+        + Optional<User> findByEmail(String email)
+        + List<User> findAll()
+    }
     
+    class UserController {
+        - UserService userService
+
+    }
     
-     
+    class CatService {
+        - CatRepository catRepository
+        + Cat registerCat(Cat cat)
+    }
+    
+    class CatRepository {
+        + List<Cat> findAll()
+    }
+    
+    class CatController {
+        CatService catService
+    }
+    
+CatController --> CatService : Uses
+CatService --> CatRepository : Uses
+CatRepository --> Cat : Manages
+UserController --> UserService : Uses
+UserService --> UserRepository : Uses
+UserRepository --> User : Manages
 User --> Role : has a
 ```
