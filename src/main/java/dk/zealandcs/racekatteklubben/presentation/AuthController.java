@@ -18,7 +18,7 @@ public class AuthController {
     AuthController(IUserService userService) { this.userService = userService; }
 
     @GetMapping("/login")
-    public String loginPage(@ModelAttribute User user, HttpSession session, Model model) {
+    public String loginPage(@ModelAttribute User user, Model model) {
         return "login/index";
     }
 
@@ -28,11 +28,11 @@ public class AuthController {
 
         if (loggedIn.isEmpty()) {
             model.addAttribute("error", "Ugyldig email eller adgangskode");
+            return "login/index";
         } else {
-            session.setAttribute("currentUser", loggedIn);
+            session.setAttribute("currentUser", loggedIn.get());
+            return "redirect:/";
         }
-
-        return "login";
     }
 
     @GetMapping("/register")
@@ -41,7 +41,14 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerRequest(@ModelAttribute User user, Model model) {
-        return "register/succes";
+    public String registerRequest(@ModelAttribute User user, HttpSession session, Model model) {
+        try {
+            var registered = userService.register(user);
+            session.setAttribute("currentUser", registered);
+            return "register/succes";
+        } catch (Exception e) {
+            model.addAttribute("error", "Invalid credentials");
+            return "register/index";
+        }
     }
 }
