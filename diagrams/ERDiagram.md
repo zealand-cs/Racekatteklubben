@@ -17,6 +17,7 @@ erDiagram
         int dateOfBirth
         string race
         string imageUrl
+        string gender
     }
 
     shows {

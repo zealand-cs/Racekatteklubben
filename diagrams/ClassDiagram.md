@@ -29,7 +29,7 @@ direction LR
         Employee
         User
         Admin
-        - Integer rank
+        Integer rank
         Role(Integer rank)
         bool isAtleast(Role role)
                 
@@ -86,7 +86,7 @@ direction LR
     
     class UserController {
         - UserService userService
-
+        + UserController(IUserService userService)
     }
     
     class CatService {
