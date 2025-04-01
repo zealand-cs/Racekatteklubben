@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+  </head>
+  <body>
+    <header th:replace="/fragments/header :: header"></header>
+    <section layout:fragment="content">Page Content</section>
+    <footer th:replace="/fragments/footer :: footer"></footer>
+  </body>
+</html>
