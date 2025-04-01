@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout}">
+    <head>
+        <title>Registrer</title>
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <div class="container">
+                <h1>Registrer</h1>
+                <form method="post" action="/register">
+                    <label>
+                        Navn
+                        <input type="text" name="name" required>
+                    </label>
+                    <label>
+                        Email
+                        <input type="email" name="email" required>
+                    </label>
+                    <label>
+                        Kodeord
+                        <input type="password" name="password" required minlength="8">
+                    </label>
+                    <label>
+                        Fødselsdato
+                        <input type="date" name="dateOfBirth" required>
+                    </label>
+                    <button type="submit">Registrer</button>
+                </form>
+                <p th:text="${error}"></p>
+            </div>
+        </section>
+    </body>
+</html>

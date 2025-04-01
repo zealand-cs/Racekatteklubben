@@ -1,11 +1,25 @@
 <!DOCTYPE html>
 <html lang="da" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout}">
     <head>
-
+        <title>Log ind</title>
     </head>
     <body>
         <section layout:fragment="content">
-            <h1>Content test</h1>
+            <div class="container">
+                <h1>Log ind</h1>
+                <form method="post" action="/login">
+                    <label>
+                        Email
+                        <input type="email" name="email">
+                    </label>
+                    <label>
+                        Kodeord
+                        <input type="password" name="password">
+                    </label>
+                    <button type="submit">Log ind</button>
+                </form>
+                <p th:text="${error}"></p>
+            </div>
         </section>
     </body>
 </html>

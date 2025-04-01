@@ -7,6 +7,7 @@ erDiagram
         string name
         string email
         string password
+        string role
         int dateOfBirth
     }
 

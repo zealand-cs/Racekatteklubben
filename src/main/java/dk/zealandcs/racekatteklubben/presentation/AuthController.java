@@ -42,13 +42,28 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerRequest(@ModelAttribute User user, HttpSession session, Model model) {
-        try {
-            var registered = userService.register(user);
-            session.setAttribute("currentUser", registered);
-            return "register/succes";
-        } catch (Exception e) {
-            model.addAttribute("error", "Invalid credentials");
+        var registered = userService.register(user);
+
+        if (registered.isEmpty()) {
+            model.addAttribute("error", "Ugyldige detaljer.");
             return "register/index";
         }
+        session.setAttribute("currentUser", registered.get());
+
+        return "redirect:/register/succes";
+    }
+
+    @GetMapping("/register/succes")
+    public String registerSucces(HttpSession session, Model model) {
+        var user = (User)session.getAttribute("currentUser");
+        model.addAttribute("name", user.getName());
+
+        return "register/succes";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }

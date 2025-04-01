@@ -4,10 +4,12 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+
+      <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <header th:replace="/fragments/header :: header"></header>
+    <header th:replace="~{/fragments/header :: header}"></header>
     <section layout:fragment="content">Page Content</section>
-    <footer th:replace="/fragments/footer :: footer"></footer>
+    <footer th:replace="~{/fragments/footer :: footer}"></footer>
   </body>
 </html>
