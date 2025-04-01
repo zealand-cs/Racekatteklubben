@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout}">
+    <head>
+        <meta charset="UTF-8">
+        <title th:text="${user.getName()}"></title>
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <h1 th:text="${user.getName()}"></h1>
+            <p th:text="${user.getEmail()}"></p>
+            <p th:text="${user.getDateOfBirth()}"></p>
+            <p th:text="${user.getRole()}"></p>
+            <a th:if="${allowEdit}" th:href="${'/users/' + user.getId() + '/edit'}">Rediger profil</a>
+        </section>
+    </body>
+</html>

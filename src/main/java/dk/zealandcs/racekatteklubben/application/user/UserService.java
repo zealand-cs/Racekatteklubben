@@ -49,4 +49,45 @@ public class UserService implements IUserService {
             return Optional.empty();
         }
     }
+
+    @Override
+    public boolean updateUser(User executingUser, User targetUser) {
+        if (executingUser.getId() == targetUser.getId() || executingUser.getRole().isAtLeast(Role.Employee)) {
+            userRepository.update(targetUser);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteUser(User executingUser, User targetUser) {
+        if (executingUser.getId() == targetUser.getId() || executingUser.getRole().isAtLeast(Role.Employee)) {
+            userRepository.delete(targetUser.getId());
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean updatePassword(User executingUser, User targetUser, String password) {
+        if (executingUser.getId() == targetUser.getId() || executingUser.getRole().isAtLeast(Role.Admin)) {
+            targetUser.setPassword(password);
+            userRepository.updatePassword(targetUser);
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean updateRole(User executingUser, User targetUser, Role role) {
+        if (executingUser.getRole().isAtLeast(Role.Admin)) {
+            targetUser.setRole(role);
+            userRepository.updateRole(targetUser);
+            return true;
+        }
+
+        return false;
+    }
 }

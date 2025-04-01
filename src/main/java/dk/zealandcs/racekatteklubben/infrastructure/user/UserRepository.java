@@ -100,14 +100,51 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public void update(User user) {
-        String sql = "UPDATE users SET name = ?, email = ?, password = ?, dateOfBirth = ?, role = ? WHERE id = ?";
+        String sql = "UPDATE users SET name = ?, email = ?, dateOfBirth = ? WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getDateOfBirth().toString());
-            stmt.setString(5, user.getRole().name());
+            stmt.setString(3, user.getDateOfBirth().toString());
+            stmt.setInt(4, user.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO correct exception
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updatePassword(User user) throws UserWriteException {
+        String sql = "UPDATE users SET password = ? WHERE id = ?";
+
+        try (Connection conn = databaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+            // Hash password and assign it to user
+            String passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            user.setPassword(passwordHash);
+
+            stmt.setString(1, user.getPassword());
+            stmt.setInt(2, user.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // TODO correct exception
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateRole(User user) {
+        String sql = "UPDATE users SET role = ? WHERE id = ?";
+
+        try (Connection conn = databaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+            // Hash password and assign it to user
+            String passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
+            user.setPassword(passwordHash);
+
+            stmt.setString(1, user.getRole().name());
+            stmt.setInt(2, user.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -120,6 +157,7 @@ public class UserRepository implements IUserRepository {
     public void delete(int id) {
         String sql = "DELETE FROM users WHERE id = ?";
         try (var conn = databaseConfig.getConnection(); var stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

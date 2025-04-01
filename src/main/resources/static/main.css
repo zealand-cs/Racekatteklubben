@@ -17,3 +17,18 @@ html, body {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.8);
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    & label {
+        display: flex;
+        flex-direction: column;
+    }
+
+    & input {
+        height: 2rem;
+    }
+}

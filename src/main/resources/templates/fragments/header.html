@@ -9,6 +9,7 @@
                     <a href="/register">Registrer</a>
                 </span>
                 <span th:unless="${currentUser.isEmpty()}">
+                    <a href="/users/me">Profil</a>
                     <a href="/logout">Log ud</a>
                 </span>
             </div>

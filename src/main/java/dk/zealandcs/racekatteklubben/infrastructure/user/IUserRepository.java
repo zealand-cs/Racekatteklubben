@@ -11,5 +11,7 @@ public interface IUserRepository {
     Optional<User> findByEmail(String email);
     List<User> findAll();
     void update(User user);
+    void updatePassword(User user);
+    void updateRole(User user);
     void delete(int id);
 }
