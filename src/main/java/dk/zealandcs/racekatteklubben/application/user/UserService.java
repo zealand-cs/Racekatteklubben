@@ -61,7 +61,7 @@ public class UserService implements IUserService {
 
     @Override
     public boolean deleteUser(User executingUser, User targetUser) {
-        if (executingUser.getId() == targetUser.getId() || executingUser.getRole().isAtLeast(Role.Employee)) {
+        if (executingUser.getId() == targetUser.getId() || executingUser.getRole().isAtLeast(Role.Admin)) {
             userRepository.delete(targetUser.getId());
             return true;
         }

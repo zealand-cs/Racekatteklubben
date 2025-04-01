@@ -93,6 +93,25 @@ public class UserController {
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not allowed to update password for user");
     }
 
+    @PostMapping("/{userId}/edit/role")
+    public String editRole(@PathVariable int userId, @RequestParam Role role, HttpSession session, Model model) {
+        var user = userService.getUser(userId);
+        if (user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "user not found");
+        }
+
+        var currentUser = Optional.ofNullable((User)session.getAttribute("currentUser"));
+        if (currentUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not logged in");
+        }
+
+        if (userService.updateRole(currentUser.get(), user.get(), role)) {
+            return "redirect:/users/" + userId + "/edit";
+        }
+
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "not allowed to update password for user");
+    }
+
     @PostMapping("/{userId}/delete")
     public String deleteUser(@PathVariable int userId, HttpSession session, Model model) {
         var user = userService.getUser(userId);
