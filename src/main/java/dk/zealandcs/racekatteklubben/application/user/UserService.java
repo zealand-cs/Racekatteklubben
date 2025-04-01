@@ -7,6 +7,7 @@ import dk.zealandcs.racekatteklubben.infrastructure.user.UserWriteException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,6 +15,11 @@ public class UserService implements IUserService {
     private final IUserRepository userRepository;
 
     UserService(IUserRepository repo) { this.userRepository = repo; }
+
+    @Override
+    public List<User> allUsers() {
+        return userRepository.findAll();
+    }
 
     @Override
     public Optional<User> getUser(int id) {
