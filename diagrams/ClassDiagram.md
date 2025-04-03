@@ -30,12 +30,12 @@ direction LR
     
     class Role {
         <<enumeration>>
-        Employee
-        User
-        Admin
-        Integer rank
-        Role(Integer rank)
-        bool isAtleast(Role role)
+        + Employee
+        + User
+        + Admin
+        - Integer rank
+        + Role(Integer rank)
+        + bool isAtleast(Role role)
                 
     }
     
@@ -48,7 +48,7 @@ direction LR
         - Integer points
         - String image
         
-        +Cat(Integer Id, String name, String race, Integer birthdate, Integer points, String image)
+        + Cat(Integer Id, String name, String race, Integer birthdate, Integer points, String image)
         
         + Integer getId()
         + void setId(Integer Id)
@@ -119,11 +119,11 @@ direction LR
         + String allUsers(Model model)
         + String self(HttpSession session)
         + String user(@PathVariable int userId, HttpSession session, Model model)
-        + String editUser(@Pathvariable int userId, HttpSession session, Model model)
-        + String editRequest(@Pathvariable int userId, @ModelAttribute User user, HttpSession session, Model model)
-        + String editPassword(@Pathvariable int userId, @RequestParam String password, HttpSession session, Model model)
-        + String editRole(@Pathvariable int userId, @RequestParam, Role role, HttpSession, Model model)
-        + String deleteUser(@Pathvariable int userId, HttpSession session, Model model)
+        + String editUser(@PathVariable int userId, HttpSession session, Model model)
+        + String editRequest(@PathVariable int userId, @ModelAttribute User user, HttpSession session, Model model)
+        + String editPassword(@PathVariable int userId, @RequestParam String password, HttpSession session, Model model)
+        + String editRole(@PathVariable int userId, @RequestParam, Role role, HttpSession, Model model)
+        + String deleteUser(@PathVariable int userId, HttpSession session, Model model)
     }
     
     class CatService {
@@ -137,7 +137,7 @@ direction LR
     
     class CatRepository {
         - DatabaseConfig databaseConfig
-        + Cat writ(Cat cat)
+        + Cat write(Cat cat)
         + Optional<Cat> findById(int id)
         + Optional<Cat> findByUserId(int id)
         + List<Cat> findAll()
@@ -156,7 +156,7 @@ direction LR
     }
     
     class CatController {
-        CatService catService
+        - CatService catService
     }
     
     class AuthController {
