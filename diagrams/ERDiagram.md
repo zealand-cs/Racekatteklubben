@@ -8,19 +8,19 @@ erDiagram
         string email
         string password
         string role
-        int dateOfBirth
+        Datetime
     }
 
     cats {
         int id PK
         int ownerId FK
         string name
-        int dateOfBirth
+        Datetime
         string race
         string imageUrl
         string gender
     }
-
+    
     shows {
         int id PK
         int startDate

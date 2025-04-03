@@ -46,11 +46,15 @@ sequenceDiagram
     participant DB as Database
     
     external -->>Controller: Login
-    Controller -->> IService: test
-    IService -->>Service: test
-    Service-->>IRepo: test 
-    IRepo-->>Repo: test
-    Repo -->>DB: test
-     
+    Controller -->> IService: Sends Email/Password
+    IService -->>Service: Sends Email/Password
+    Service-->>IRepo: Sends Request to Database to find user
+    IRepo-->>Repo: Sends Request to Database to find user
+    Repo -->>DB: Validate UserObject to stored data
+    DB -->> Repo: Sends Email/Password
+    Repo -->> IRepo: Sends Email/Password
+    IRepo -->> Service: Checks Password by Unhashing
+    Service -->> IService: Confirm Login
+    IService -->> Controller: Confirm Login
     
 ```
