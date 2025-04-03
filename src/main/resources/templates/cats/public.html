@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${cat.getName()}"></title>
+</head>
+<body>
+<section layout:fragment="content">
+    <h1 th:text="${cat.getName()}"></h1>
+    <p th:text="${cat.getRace()}"></p>
+    <p th:text="${cat.getGender()}"></p>
+    <p th:text="${cat.getDateOfBirth()}"></p>
+    <p th:text="${cat.getOwnerId()}"></p>
+    <a th:if="${allowEdit}" th:href="${'/cats/' + cat.getId() + '/edit'}">Rediger kat</a>
+</section>
+</body>
+</html>

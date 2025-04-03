@@ -80,7 +80,7 @@ public class CatRepository implements ICatRepository {
 
     @Override
     public List<Cat> findAll() {
-        String sql = "SELECT id, ownerId, name, race, gender, dateOfBirth, imageUrl FROM cats WHERE ownerId = ?";
+        String sql = "SELECT id, ownerId, name, race, gender, dateOfBirth, imageUrl FROM cats";
         try (Connection conn = databaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
             var rs = stmt.executeQuery();
             var cats = new ArrayList<Cat>();
