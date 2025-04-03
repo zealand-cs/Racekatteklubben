@@ -9,6 +9,7 @@ direction LR
         - String email
         - String password
         - Role role
+        - Date dateOfBirth
         
         +User(Integer Id, String name, String email, String password, Role role)
         
@@ -22,6 +23,9 @@ direction LR
         +void setPassword(String password)
         +Role getRole()
         +void setRole(Role role)
+        +bool validate()
+        +Date getDateOfBirth()
+        +void setDateOfBirth()
     }
     
     class Role {
@@ -40,7 +44,7 @@ direction LR
         String name
         String race
         String gender;
-        LocalDate birthdate
+        Date birthdate
         Integer points
         String image
         
@@ -54,8 +58,8 @@ direction LR
         +void setRace(String race)
         +String getGender()
         +void setGender(String gender)
-        +Integer getBirthdate()
-        +void setBirthdate(Integer birthdate)
+        +Date getBirthdate()
+        +void setBirthdate(Date birthdate)
         +Integer getPoints()
         +void setPoints(Integer points)
         +String getImage()
@@ -65,28 +69,62 @@ direction LR
         
     class UserService {
         - UserRepository userRepository
-        + User registerUser(User user)
-        + Optional<User> getUserByEmail(String email) 
+        + getUser(int id)
+        + List<User> allUsers()
+        + Optional<User> login(String email, String password)
+        + Optional<User> registerUser(User user)
+        + boolean updateUser(User executingUser, User targetUser)
+        + boolean deleteUser(User executingUser, User targetUser)
+        + boolean updatePassword(User executingUser, User targetUser, String password)
+        + boolean updateRole(User executingUser, User targetUser, Role role)        
     }
     
     class IUserService {
-        + Optional<User> get (int Id)
+        + Optional<User> getUser (int Id)
         + Optional<User> login(String email, String password)
-        + User register (User user)
+        + Optional<User> register (User user)
+        + List<User> allUsers()
+        + bool deleteUser(User executingUser, User targetUser)
+        + bool updateUser(Use executingUser, User targetUser)
+        + bool updatePassword(User executingUser, User targetUser)
+        + bool updateRole(User executingUser, User targetUser, Role role)
     }
     
     class UserRepository {
+        - DatabaseConfig databaseConfig
+        + User write(User user)
+        + Optional<User> findById(int id)
         + Optional<User> findByEmail(String email)
         + List<User> findAll()
+        + void update(User user)
+        + void updatePassword(user user)
+        + void updateRole(User user)
+        + void delete(int id)
+        + Optional<User> userFromResultSet(ResultSet rs)
     }
     
     class IUserRepository {
-        
+        + User write(User user)
+        + Optional<User> findById(int id)
+        + Optional<User> findByEmail(String email)
+        + List<User> findAll()
+        + void update(User user)
+        + void updatePassword(User user)
+        + void updateRole(User user)
+        + void delete(int id)
     }
     
     class UserController {
         - UserService userService
         + UserController(IUserService userService)
+        + String allUsers(Model model)
+        + String self(HttpSession session)
+        + String user(@PathVariable int userId, HttpSession session, Model model)
+        + String editUser(@Pathvariable int userId, HttpSession session, Model model)
+        + String editRequest(@Pathvariable int userId, @ModelAttribute User user, HttpSession session, Model model)
+        + String editPassword(@Pathvariable int userId, @RequestParam String password, HttpSession session, Model model)
+        + String editRole(@Pathvariable int userId, @RequestParam, Role role, HttpSession, Model model)
+        + String deleteUser(@Pathvariable int userId, HttpSession session, Model model)
     }
     
     class CatService {
@@ -112,10 +150,17 @@ direction LR
     
     class AuthController {
         - IUserService userService
+        + AuthController(IUserService userService)
         +String loginPage(@ModelAttribute User user, HttpSession session, Model model)
         +String loginRequest(@ModelAttribute User user, HttpSession session, Model model)
         +String registerPage(@ModelAttribute User user, Model model)
         +String registerRequest(@ModelAttribute User user, Model model)
+        +String registerSucess(HttpSession session, Model model)
+        +String logout(HttpSession session)
+    }
+    
+    class FrontPageController {
+        +String frontpage()
     }
 
 
