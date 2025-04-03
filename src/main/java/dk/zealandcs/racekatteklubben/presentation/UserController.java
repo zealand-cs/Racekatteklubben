@@ -19,6 +19,12 @@ public class UserController {
 
     UserController(IUserService userService) { this.userService = userService; }
 
+    @GetMapping
+    public String allUsers(Model model) {
+        model.addAttribute("users", userService.allUsers());
+        return "users/all";
+    }
+
     @GetMapping("/me")
     public String self(HttpSession session) {
         var currentUser = (User)session.getAttribute("currentUser");

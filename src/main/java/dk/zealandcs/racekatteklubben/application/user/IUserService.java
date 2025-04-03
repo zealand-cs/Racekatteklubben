@@ -3,9 +3,11 @@ package dk.zealandcs.racekatteklubben.application.user;
 import dk.zealandcs.racekatteklubben.domain.Role;
 import dk.zealandcs.racekatteklubben.domain.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
+    List<User> allUsers();
     Optional<User> getUser(int id);
     Optional<User> login(String email, String password);
     Optional<User> register(User user);

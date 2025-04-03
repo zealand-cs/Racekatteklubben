@@ -2,7 +2,9 @@
 <html lang="da">
     <body>
         <header th:fragment="header" class="app-header">
-            <div class="left"></div>
+            <div class="left">
+                <a href="/users">Alle brugere</a>
+            </div>
             <div class="right">
                 <span th:if="${currentUser.isEmpty()}">
                     <a href="/login">Log ind</a>

@@ -31,7 +31,7 @@ public class UserRepository implements IUserRepository {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getDateOfBirth().toString());
+            stmt.setDate(4, user.getDateOfBirth());
             stmt.setString(5, user.getRole().name());
             stmt.executeUpdate();
 
@@ -105,7 +105,7 @@ public class UserRepository implements IUserRepository {
         try (Connection conn = databaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getDateOfBirth().toString());
+            stmt.setDate(3, user.getDateOfBirth());
             stmt.setInt(4, user.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -139,10 +139,6 @@ public class UserRepository implements IUserRepository {
         String sql = "UPDATE users SET role = ? WHERE id = ?";
 
         try (Connection conn = databaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
-            // Hash password and assign it to user
-            String passwordHash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
-            user.setPassword(passwordHash);
-
             stmt.setString(1, user.getRole().name());
             stmt.setInt(2, user.getId());
             stmt.executeUpdate();
