@@ -11,21 +11,21 @@ direction LR
         - Role role
         - Date dateOfBirth
         
-        +User(Integer Id, String name, String email, String password, Role role)
+        + User(Integer Id, String name, String email, String password, Role role)
         
-        +Integer getId()
-        +void setId(Integer Id)
-        +String getName()
-        +void setName(String name)
-        +String getEmail()
-        +void setEmail(String email)
-        +String getPassword()
-        +void setPassword(String password)
-        +Role getRole()
-        +void setRole(Role role)
-        +bool validate()
-        +Date getDateOfBirth()
-        +void setDateOfBirth()
+        + Integer getId()
+        + void setId(Integer Id)
+        + String getName()
+        + void setName(String name)
+        + String getEmail()
+        + void setEmail(String email)
+        + String getPassword()
+        + void setPassword(String password)
+        + Role getRole()
+        + void setRole(Role role)
+        + bool validate()
+        + Date getDateOfBirth()
+        + void setDateOfBirth()
     }
     
     class Role {
@@ -40,31 +40,30 @@ direction LR
     }
     
     class Cat {
-        Integer Id
-        String name
-        String race
-        String gender;
-        Date birthdate
-        Integer points
-        String image
+        - Integer Id
+        - String name
+        - String race
+        - String gender;
+        - Date birthdate
+        - Integer points
+        - String image
         
         +Cat(Integer Id, String name, String race, Integer birthdate, Integer points, String image)
         
-        +Integer getId()
-        +void setId(Integer Id)
-        +String getName()
-        +void setId(String name)
-        +String getRace()
-        +void setRace(String race)
-        +String getGender()
-        +void setGender(String gender)
-        +Date getBirthdate()
-        +void setBirthdate(Date birthdate)
-        +Integer getPoints()
-        +void setPoints(Integer points)
-        +String getImage()
-        +void setImage(String image)
-        
+        + Integer getId()
+        + void setId(Integer Id)
+        + String getName()
+        + void setId(String name)
+        + String getRace()
+        + void setRace(String race)
+        + String getGender()
+        + void setGender(String gender)
+        + Date getBirthdate()
+        + void setBirthdate(Date birthdate)
+        + Integer getPoints()
+        + void setPoints(Integer points)
+        + String getImage()
+        + void setImage(String image)
         }
         
     class UserService {
@@ -137,11 +136,23 @@ direction LR
  }
     
     class CatRepository {
+        - DatabaseConfig databaseConfig
+        + Cat writ(Cat cat)
+        + Optional<Cat> findById(int id)
+        + Optional<Cat> findByUserId(int id)
         + List<Cat> findAll()
+        + void update(Cat cat)
+        + void delete(int id)
+        + Optional<Cat> catFromResultSet(ResultSet rs)
     }
     
     class ICatRepository {
-        
+        + Cat write(Cat cat)
+        + Optional<Cat> findById(int id)
+        + Optional<Cat> findByUserId(int id)
+        + List<Cat> findAll()
+        + void update(Cat cat)
+        + void delete(int id)
     }
     
     class CatController {
@@ -151,24 +162,32 @@ direction LR
     class AuthController {
         - IUserService userService
         + AuthController(IUserService userService)
-        +String loginPage(@ModelAttribute User user, HttpSession session, Model model)
-        +String loginRequest(@ModelAttribute User user, HttpSession session, Model model)
-        +String registerPage(@ModelAttribute User user, Model model)
-        +String registerRequest(@ModelAttribute User user, Model model)
-        +String registerSucess(HttpSession session, Model model)
-        +String logout(HttpSession session)
+        + String loginPage(@ModelAttribute User user, HttpSession session, Model model)
+        + String loginRequest(@ModelAttribute User user, HttpSession session, Model model)
+        + String registerPage(@ModelAttribute User user, Model model)
+        + String registerRequest(@ModelAttribute User user, Model model)
+        + String registerSucess(HttpSession session, Model model)
+        + String logout(HttpSession session)
     }
     
     class FrontPageController {
-        +String frontpage()
+        + String frontpage()
+    }
+    
+    class UserWriteException {
+        + UserWriteException(String message)
+    }
+    
+    class CatWriteException {
+        + CatWriteException(String message)
     }
 
 
 %% Interface implementations
-    UserService ..|> IUserService
-    UserRepository ..|> IUserRepository
-    CatService ..|> ICatService
-    CatRepository ..|> ICatRepository
+    UserService ..|> IUserService : Implements
+    UserRepository ..|> IUserRepository : Implements
+    CatService ..|> ICatService : Implements
+    CatRepository ..|> ICatRepository :Implements
 
 %% Dependency injections
     UserController --> IUserService : Uses
@@ -179,7 +198,8 @@ direction LR
     CatService --> ICatRepository : Uses
     CatRepository --> Cat : Manages
 
-%% User and Role Relationship
+%% Relationships
     User --> Role : has a
-    
+    UserRepository -->UserWriteException : throws exception
+    CatRepository -->CatWriteException : throws exception
 ```
