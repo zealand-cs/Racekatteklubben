@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout}">
+    <head>
+        <meta charset="UTF-8">
+        <title>Brugere</title>
+    </head>
+    <body>
+        <section layout:fragment="content">
+            <div class="cat-list">
+                <ul>
+                    <li th:each="cat : ${cats}">
+                        <span th:text="${cat.getName()}"></span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </body>
+</html>

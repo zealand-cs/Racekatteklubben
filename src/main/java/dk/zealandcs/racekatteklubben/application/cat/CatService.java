@@ -2,9 +2,9 @@ package dk.zealandcs.racekatteklubben.application.cat;
 
 import dk.zealandcs.racekatteklubben.domain.Cat;
 import dk.zealandcs.racekatteklubben.infrastructure.cat.ICatRepository;
-import dk.zealandcs.racekatteklubben.infrastructure.user.IUserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -15,6 +15,16 @@ public class CatService implements ICatService {
 
     @Override
     public Optional<Cat> getCat(int id) {
-        return Optional.empty();
+        return catRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Cat> createCat(Cat cat) {
+        return Optional.ofNullable(catRepository.write(cat));
+    }
+
+    @Override
+    public List<Cat> allCats() {
+        return catRepository.findAll();
     }
 }
