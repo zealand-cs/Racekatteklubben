@@ -1,26 +1,28 @@
 package dk.zealandcs.racekatteklubben.domain;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Cat {
 
     private int id;
+    private int ownerId;
     private String name;
     private String race;
     private String gender;
-    private LocalDate birthdate;
+    private Date dateOfBirth;
     private int points;
-    private String image;
+    private String imageUrl;
 
+    public Cat() { }
 
-    public Cat(int id, String name, String race, String gender, LocalDate birthdate, int points, String image) {
+    public Cat(int id, String name, String race, String gender, Date dateOfBirth, int points, String imageUrl) {
         this.id = id;
         this.name = name;
         this.race = race;
         this.gender = gender;
-        this.birthdate = birthdate;
+        this.dateOfBirth = dateOfBirth;
         this.points = points;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 
     public int getId() {
@@ -29,6 +31,14 @@ public class Cat {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getName() {
@@ -55,12 +65,12 @@ public class Cat {
         this.gender = gender;
     }
 
-    public LocalDate getBirthdate() {
-        return birthdate;
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
-    public void setBirthdate(LocalDate birthdate) {
-        this.birthdate = birthdate;
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public int getPoints() {
@@ -71,11 +81,11 @@ public class Cat {
         this.points = points;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

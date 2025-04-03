@@ -1,0 +1,6 @@
+CREATE TABLE catShows
+(
+    id        INT      NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    startDate DATETIME NOT NULL,
+    endDate   DATETIME NOT NULL
+);
