@@ -2,19 +2,19 @@
 <html lang="da" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Opret kat</title>
+    <title>Rediger</title>
 </head>
 <body>
 <section layout:fragment="content">
     <h1>Opret kat</h1>
-    <form action="/cats" method="post">
+    <form th:action="${'/cats/' + cat.getId() + '/edit'}" method="post">
         <label>
             Navn
-            <input type="text" name="name">
+            <input type="text" name="name" th:value="${cat.getName()}">
         </label>
         <label>
             Race
-            <input type="hidden" name="race" value="bengal">
+            <input type="hidden" name="race" th:value="${cat.getRace()}">
         </label>
         <label>
             Køn
@@ -25,13 +25,17 @@
         </label>
         <label>
             Fødselsdag
-            <input type="date" name="dateOfBirth">
+            <input type="date" name="dateOfBirth" th:value="${cat.getDateOfBirth()}">
         </label>
         <label>
             Profilbillede
-            <input type="text" name="imageUrl">
+            <input type="text" name="imageUrl" th:value="${cat.getImageUrl()}">
         </label>
-        <button type="submit">Opret</button>
+        <button type="submit">Opdater</button>
+    </form>
+
+    <form th:action="${'/cats/' + cat.getId() + '/delete'}" method="post">
+        <button>Slet kat</button>
     </form>
 </section>
 </body>

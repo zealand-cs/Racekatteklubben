@@ -2,7 +2,7 @@
 <html lang="da" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout}">
     <head>
         <meta charset="UTF-8">
-        <title>Brugere</title>
+        <title>Katte</title>
     </head>
     <body>
         <section layout:fragment="content">
@@ -10,7 +10,10 @@
             <div class="cat-list">
                 <ul>
                     <li th:each="cat : ${cats}">
-                        <span th:text="${cat.getName()}"></span>
+                        <a th:href="@{/cats/{id}(id=${cat.getId()})}">
+                            <span th:text="${cat.getName()}"></span>
+                            (<span th:text="${cat.getPoints()}"></span>)
+                        </a>
                     </li>
                 </ul>
             </div>

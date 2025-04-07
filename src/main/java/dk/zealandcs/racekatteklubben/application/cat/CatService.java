@@ -1,6 +1,8 @@
 package dk.zealandcs.racekatteklubben.application.cat;
 
 import dk.zealandcs.racekatteklubben.domain.Cat;
+import dk.zealandcs.racekatteklubben.domain.Role;
+import dk.zealandcs.racekatteklubben.domain.User;
 import dk.zealandcs.racekatteklubben.infrastructure.cat.ICatRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,24 @@ public class CatService implements ICatService {
     @Override
     public Optional<Cat> createCat(Cat cat) {
         return Optional.ofNullable(catRepository.write(cat));
+    }
+
+    @Override
+    public boolean editCat(User executingUser, Cat cat) {
+        if (executingUser.getId() == cat.getOwnerId() || executingUser.getRole().isAtLeast(Role.Employee)) {
+            catRepository.update(cat);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteCat(User executingUser, Cat cat) {
+        if (executingUser.getId() == cat.getOwnerId() || executingUser.getRole().isAtLeast(Role.Employee)) {
+            catRepository.delete(cat.getId());
+            return true;
+        }
+        return false;
     }
 
     @Override

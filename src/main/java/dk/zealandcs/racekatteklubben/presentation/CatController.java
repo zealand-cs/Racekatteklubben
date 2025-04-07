@@ -72,8 +72,61 @@ public class CatController {
         return "cats/public";
     }
 
-    @PostMapping("/{catId}")
-    public String updateCat(@PathVariable int catId, HttpSession session, Model model) {
-        return "redirect:/cats/" + catId;
+    @GetMapping("/{catId}/edit")
+    public String editCatPage(@PathVariable int catId, HttpSession session, Model model) {
+        var cat = catService.getCat(catId);
+        if (cat.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "cat not found");
+        }
+
+        var currentUser = Optional.ofNullable((User)session.getAttribute("currentUser"));
+        if (currentUser.isPresent() && (currentUser.get().getId() == cat.get().getOwnerId() || currentUser.get().getRole().isAtLeast(Role.Admin))) {
+            model.addAttribute("cat", cat.get());
+            return "cats/edit";
+        } else {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "no access to edit cat");
+        }
+    }
+
+    @PostMapping("/{catId}/edit")
+    public String updateCat(@PathVariable int catId, @ModelAttribute Cat cat, HttpSession session, Model model) {
+        var currentUser = Optional.ofNullable((User)session.getAttribute("currentUser"));
+        if (currentUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "not logged in");
+        }
+
+        var catCheck = catService.getCat(catId);
+        if (catCheck.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "cat not found");
+        }
+
+        cat.setId(catId);
+        cat.setOwnerId(catCheck.get().getOwnerId());
+
+        if (catService.editCat(currentUser.get(), cat)) {
+            model.addAttribute("cat", cat);
+            return "redirect:/cats/" + catId;
+        }
+
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "no access to edit cat");
+    }
+
+    @PostMapping("/{catId}/delete")
+    public String deleteCat(@PathVariable int catId, HttpSession session, Model model) {
+        var currentUser = Optional.ofNullable((User)session.getAttribute("currentUser"));
+        if (currentUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "not logged in");
+        }
+
+        var cat = catService.getCat(catId);
+        if (cat.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "cat not found");
+        }
+
+        if (catService.deleteCat(currentUser.get(), cat.get())) {
+            return "redirect:/cats";
+        }
+
+        throw new ResponseStatusException(HttpStatus.FORBIDDEN, "no access to delete cat");
     }
 }

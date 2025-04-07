@@ -9,7 +9,9 @@
             <div class="user-list">
                 <ul>
                     <li th:each="user : ${users}">
-                        <span th:text="${user.getName()}"></span>
+                        <a th:href="@{/users/{id}(id=${user.getId()})}">
+                            <span th:text="${user.getName()}"></span>
+                        </a>
                     </li>
                 </ul>
             </div>

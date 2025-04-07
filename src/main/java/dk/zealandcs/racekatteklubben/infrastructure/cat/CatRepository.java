@@ -2,10 +2,7 @@ package dk.zealandcs.racekatteklubben.infrastructure.cat;
 
 import dk.zealandcs.racekatteklubben.config.DatabaseConfig;
 import dk.zealandcs.racekatteklubben.domain.Cat;
-import dk.zealandcs.racekatteklubben.domain.Role;
-import dk.zealandcs.racekatteklubben.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
