@@ -1,5 +1,6 @@
 package dk.zealandcs.racekatteklubben.presentation;
 
+import dk.zealandcs.racekatteklubben.application.cat.ICatService;
 import dk.zealandcs.racekatteklubben.application.user.IUserService;
 import dk.zealandcs.racekatteklubben.domain.Role;
 import dk.zealandcs.racekatteklubben.domain.User;
@@ -16,8 +17,9 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
     private final IUserService userService;
+    private final ICatService catService;
 
-    UserController(IUserService userService) { this.userService = userService; }
+    UserController(IUserService userService, ICatService catService) { this.userService = userService; this.catService = catService; }
 
     @GetMapping
     public String allUsers(Model model) {
@@ -39,6 +41,9 @@ public class UserController {
         }
 
         model.addAttribute("user", user.get());
+
+        var cats = catService.getCatsByOwner(userId);
+        model.addAttribute("cats", cats);
 
         var currentUser = Optional.ofNullable((User)session.getAttribute("currentUser"));
         if (currentUser.isPresent() && (currentUser.get().getId() == userId || currentUser.get().getRole().isAtLeast(Role.Employee))) {

@@ -60,18 +60,21 @@ public class CatRepository implements ICatRepository {
     }
 
     @Override
-    public Optional<Cat> findByUserId(int id) {
+    public List<Cat> findByUserId(int id) {
         String sql = "SELECT id, ownerId, name, race, gender, dateOfBirth, imageUrl FROM cats WHERE ownerId = ?";
         try (Connection conn = databaseConfig.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setInt(1, id);
             var rs = stmt.executeQuery();
-            if (rs.next()) {
-                return catFromResultSet(rs);
+            var cats = new ArrayList<Cat>();
+            while (rs.next()) {
+                var cat = catFromResultSet(rs);
+                cat.ifPresent(cats::add);
             }
-            return Optional.empty();
+            return cats;
         } catch (SQLException e) {
             e.printStackTrace();
-            return Optional.empty();
+            // TODO correct exception
+            throw new RuntimeException(e);
         }
     }
 
