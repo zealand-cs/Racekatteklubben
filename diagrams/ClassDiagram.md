@@ -129,6 +129,8 @@ direction LR
     class CatService {
         - CatRepository catRepository
         + Cat registerCat(Cat cat)
+        + boolean editCat (User executingUser, Cat cat)
+        + boolean deleteCat (User executingUser, Cat cat)
     }
     
     class ICatService {
@@ -157,6 +159,12 @@ direction LR
     
     class CatController {
         - CatService catService
+        + CatController(ICatService catService)
+        + String findCats(Model model)
+        + String createCat(@ModelAttribute Cat cat, HttpSession session, Model model)
+        + String cat(@PathVariable int catId, HttpSession session, Model model)
+        + String updateCat(@PathVariable int catId, HttpSession session, Model model)
+        
     }
     
     class AuthController {
