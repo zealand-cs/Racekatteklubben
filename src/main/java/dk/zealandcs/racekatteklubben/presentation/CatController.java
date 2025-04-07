@@ -43,6 +43,16 @@ public class CatController {
         return "redirect:/cats/" + newCat.get().getId();
     }
 
+    @GetMapping("/create")
+    public String createCatPage(HttpSession session, Model model) {
+        var currentUser = Optional.ofNullable((User)session.getAttribute("currentUser"));
+        if (currentUser.isEmpty()) {
+            return "redirect:/login?redirect=/cats/create";
+        }
+
+        return "/cats/create";
+    }
+
     @GetMapping("/{catId}")
     public String cat(@PathVariable int catId, HttpSession session, Model model) {
         var cat = catService.getCat(catId);

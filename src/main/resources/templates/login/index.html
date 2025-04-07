@@ -7,7 +7,7 @@
         <section layout:fragment="content">
             <div class="container">
                 <h1>Log ind</h1>
-                <form method="post" action="/login">
+                <form method="post" th:action="@{/login(redirect=${redirect})}">
                     <label>
                         Email
                         <input type="email" name="email">

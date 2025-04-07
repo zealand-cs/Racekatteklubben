@@ -4,10 +4,7 @@ import dk.zealandcs.racekatteklubben.application.user.IUserService;
 import dk.zealandcs.racekatteklubben.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -18,12 +15,15 @@ public class AuthController {
     AuthController(IUserService userService) { this.userService = userService; }
 
     @GetMapping("/login")
-    public String loginPage(@ModelAttribute User user, Model model) {
+    public String loginPage(@ModelAttribute User user, @RequestParam(value = "redirect", required = false) String redirectUrl, Model model) {
+        if (redirectUrl != null) {
+            model.addAttribute("redirect", redirectUrl);
+        }
         return "login/index";
     }
 
     @PostMapping("/login")
-    public String loginRequest(@ModelAttribute User user, HttpSession session, Model model) {
+    public String loginRequest(@ModelAttribute User user, @RequestParam(value = "redirect", required = false) String redirectUrl, HttpSession session, Model model) {
         var loggedIn = userService.login(user.getEmail(), user.getPassword());
 
         if (loggedIn.isEmpty()) {
@@ -31,7 +31,11 @@ public class AuthController {
             return "login/index";
         } else {
             session.setAttribute("currentUser", loggedIn.get());
-            return "redirect:/";
+            if (redirectUrl == null) {
+                return "redirect:/";
+            } else {
+                return "redirect:" + redirectUrl;
+            }
         }
     }
 
