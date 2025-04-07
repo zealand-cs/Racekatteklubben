@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface ICatRepository {
     Cat write(Cat cat);
     Optional<Cat> findById(int id);
-    Optional<Cat> findByUserId(int id);
+    List<Cat> findByUserId(int id);
     List<Cat> findAll();
     void update(Cat cat);
     void delete(int id);

@@ -21,6 +21,11 @@ public class CatService implements ICatService {
     }
 
     @Override
+    public List<Cat> getCatsByOwner(int ownerId) {
+        return catRepository.findByUserId(ownerId);
+    }
+
+    @Override
     public Optional<Cat> createCat(Cat cat) {
         return Optional.ofNullable(catRepository.write(cat));
     }

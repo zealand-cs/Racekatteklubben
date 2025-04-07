@@ -11,6 +11,15 @@
             <p th:text="${user.getDateOfBirth()}"></p>
             <p th:text="${user.getRole()}"></p>
             <a th:if="${allowEdit}" th:href="${'/users/' + user.getId() + '/edit'}">Rediger profil</a>
+
+            <ul>
+                <li th:each="cat : ${cats}">
+                    <a th:href="@{/cats/{id}(id=${cat.getId()})}">
+                        <span th:text="${cat.getName()}"></span>
+                        (<span th:text="${cat.getPoints()}"></span>)
+                    </a>
+                </li>
+            </ul>
         </section>
     </body>
 </html>
