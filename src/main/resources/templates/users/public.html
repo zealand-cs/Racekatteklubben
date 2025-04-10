@@ -12,14 +12,8 @@
             <p th:text="${user.getRole()}"></p>
             <a th:if="${allowEdit}" th:href="${'/users/' + user.getId() + '/edit'}">Rediger profil</a>
 
-            <ul>
-                <li th:each="cat : ${cats}">
-                    <a th:href="@{/cats/{id}(id=${cat.getId()})}">
-                        <span th:text="${cat.getName()}"></span>
-                        (<span th:text="${cat.getPoints()}"></span>)
-                    </a>
-                </li>
-            </ul>
+            <h2>Katte</h2>
+            <div th:replace="~{/fragments/cat_list :: cat-list}"></div>
         </section>
     </body>
 </html>

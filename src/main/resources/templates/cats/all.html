@@ -8,16 +8,8 @@
         <section layout:fragment="content">
             <h1>Katte</h1>
             <a href="/cats/create">Create cat</a>
-            <div class="cat-list">
-                <ul>
-                    <li th:each="cat : ${cats}">
-                        <a th:href="@{/cats/{id}(id=${cat.getId()})}">
-                            <img class="pfp" th:if="${cat.getImageUrl() != null && !cat.getImageUrl().isEmpty()}" alt="cat profile image" th:src="${cat.getImageUrl()}">
-                            <span th:text="${cat.getName()}"></span> (<span th:text="${cat.getPoints()}"></span>)
-                        </a>
-                    </li>
-                </ul>
-            </div>
+
+            <div th:replace="~{/fragments/cat_list :: cat-list}"></div>
         </section>
     </body>
 </html>
