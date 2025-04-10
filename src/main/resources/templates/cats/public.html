@@ -6,13 +6,15 @@
 </head>
 <body>
 <section layout:fragment="content">
-    <h1 th:text="${cat.getName()}"></h1>
-    <img alt="cat profile image" th:src="${cat.getImageUrl()}">
-    <p th:text="${cat.getRace()}"></p>
-    <p th:text="${cat.getGender()}"></p>
-    <p th:text="${cat.getDateOfBirth()}"></p>
-    <p th:text="${cat.getOwnerId()}"></p>
-    <a th:if="${allowEdit}" th:href="${'/cats/' + cat.getId() + '/edit'}">Rediger kat</a>
+    <div class="cat-page">
+        <h1 th:text="${cat.getName()}"></h1>
+        <img th:if="${cat.getImageUrl() != null && !cat.getImageUrl().isEmpty()}" alt="cat profile image" th:src="${cat.getImageUrl()}">
+        <p th:text="${cat.getRace()}"></p>
+        <p th:text="${cat.getGender()}"></p>
+        <p th:text="${cat.getDateOfBirth()}"></p>
+        <p th:text="${cat.getOwnerId()}"></p>
+        <a th:if="${allowEdit}" th:href="${'/cats/' + cat.getId() + '/edit'}">Rediger kat</a>
+    </div>
 </section>
 </body>
 </html>
