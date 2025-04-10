@@ -190,7 +190,12 @@ direction LR
         + CatWriteException(String message)
     }
 
-
+    class DatabaseConfig {
+        - String dbUrl
+        - String dbUsername
+        - String dbPassword
+        + Connection getConnection()
+    }
 %% Interface implementations
     UserService ..|> IUserService : Implements
     UserRepository ..|> IUserRepository : Implements
@@ -205,7 +210,9 @@ direction LR
     CatController --> ICatService : Uses
     CatService --> ICatRepository : Uses
     CatRepository --> Cat : Manages
-
+    UserRepository --> DatabaseConfig : uses
+    CatRepository --> DatabaseConfig : uses
+    
 %% Relationships
     User --> Role : has a
     UserRepository -->UserWriteException : throws exception
