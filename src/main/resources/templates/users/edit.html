@@ -8,7 +8,7 @@
     <section layout:fragment="content">
       <h1 th:text="${user.getName()}"></h1>
 
-      <h1>Offentlige detaljer</h1>
+      <h2>Offentlige detaljer</h2>
       <form method="post" th:action="${'/users/' + user.getId() + '/edit'}">
         <input type="hidden" name="id" th:value="${user.getId()}">
 
