@@ -7,6 +7,8 @@
   <body>
     <section layout:fragment="content">
       <h1 th:text="${user.getName()}"></h1>
+
+      <h1>Offentlige detaljer</h1>
       <form method="post" th:action="${'/users/' + user.getId() + '/edit'}">
         <input type="hidden" name="id" th:value="${user.getId()}">
 
@@ -25,19 +27,7 @@
         <button type="submit">Gem ændringer</button>
       </form>
 
-      <form method="post" th:action="${'/users/' + user.getId() + '/edit/role'}">
-        <label>
-          Rolle
-          <select name="role" th:disabled="${!currentUser.get().getRole().isAtLeast(T(dk.zealandcs.racekatteklubben.domain.Role).Admin)}">
-            <option th:each="role : ${T(dk.zealandcs.racekatteklubben.domain.Role).values()}"
-                    th:value="${role}"
-                    th:text="${role}"
-                    th:selected="${user.getRole() == role}"></option>
-          </select>
-          <button type="submit" th:disabled="${!currentUser.get().getRole().isAtLeast(T(dk.zealandcs.racekatteklubben.domain.Role).Admin)}">Gem rolle</button>
-        </label>
-      </form>
-
+      <h2>Login detailjer</h2>
       <form method="post" th:action="${'/users/' + user.getId() + '/edit/password'}">
         <label>
           Adgangskode
@@ -50,6 +40,22 @@
       <form method="post" th:action="${'/users/' + user.getId() + '/delete'}">
         <button type="submit">Slet bruger</button>
       </form>
+
+      <div th:if="${currentUser.get().getRole().isAtLeast(T(dk.zealandcs.racekatteklubben.domain.Role).Admin)}">
+        <h2>Rolle på siden</h2>
+        <form method="post" th:action="${'/users/' + user.getId() + '/edit/role'}">
+          <label>
+            Rolle
+            <select name="role" th:disabled="${!currentUser.get().getRole().isAtLeast(T(dk.zealandcs.racekatteklubben.domain.Role).Admin)}">
+              <option th:each="role : ${T(dk.zealandcs.racekatteklubben.domain.Role).values()}"
+                      th:value="${role}"
+                      th:text="${role}"
+                      th:selected="${user.getRole() == role}"></option>
+            </select>
+            <button type="submit">Gem rolle</button>
+          </label>
+        </form>
+      </div>
     </section>
   </body>
 </html>
