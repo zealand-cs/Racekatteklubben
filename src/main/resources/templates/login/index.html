@@ -5,20 +5,22 @@
     </head>
     <body>
         <section layout:fragment="content">
-            <div class="container">
-                <h1>Log ind</h1>
-                <form method="post" th:action="@{/login(redirect=${redirect})}">
-                    <label>
-                        Email
-                        <input type="email" name="email">
-                    </label>
-                    <label>
-                        Kodeord
-                        <input type="password" name="password">
-                    </label>
-                    <button type="submit">Log ind</button>
-                </form>
-                <p th:text="${error}"></p>
+            <div class="auth-body">
+                <div class="auth-container">
+                    <h1>Log ind</h1>
+                    <form method="post" th:action="@{/login(redirect=${redirect})}">
+                        <label>
+                            Email
+                            <input type="email" name="email">
+                        </label>
+                        <label>
+                            Kodeord
+                            <input type="password" name="password">
+                        </label>
+                        <button type="submit">Log ind</button>
+                    </form>
+                    <p th:text="${error}"></p>
+                </div>
             </div>
         </section>
     </body>

@@ -7,6 +7,7 @@
 <body>
 <section layout:fragment="content">
     <h1 th:text="${cat.getName()}"></h1>
+    <img alt="cat profile image" th:src="${cat.getImageUrl()}">
     <p th:text="${cat.getRace()}"></p>
     <p th:text="${cat.getGender()}"></p>
     <p th:text="${cat.getDateOfBirth()}"></p>

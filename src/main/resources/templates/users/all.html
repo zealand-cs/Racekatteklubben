@@ -6,11 +6,12 @@
     </head>
     <body>
         <section layout:fragment="content">
+            <h1>Medlemmer</h1>
             <div class="user-list">
                 <ul>
-                    <li th:each="user : ${users}">
+                    <li class="user" th:each="user : ${users}">
                         <a th:href="@{/users/{id}(id=${user.getId()})}">
-                            <span th:text="${user.getName()}"></span>
+                            <span th:text="${user.getName()}"></span> (<span th:text="${user.getRole()}"></span>)
                         </a>
                     </li>
                 </ul>
